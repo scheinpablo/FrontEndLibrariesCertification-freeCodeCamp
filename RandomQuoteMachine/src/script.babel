@@ -1,0 +1,99 @@
+const Button = ReactBootstrap.Button;
+
+class AppWrapper extends React.Component{
+  constructor(props){
+    super(props);
+    this.colors = ["red", "blue", "green", "purple", "pink"];
+    this.state = {
+      color: this.colors[0],
+    }
+    this.updateColor = this.updateColor.bind(this);
+  }
+  
+  updateColor(){
+    var color = this.state.color;
+    while (color === this.state.color){
+       color = this.colors[Math.floor(Math.random() * this.colors.length)];
+    }
+    this.setState((oldState)=>({
+      color: color
+    }));
+  }
+ 
+  
+  render(){
+    return(
+      <div id="app-wrapper" style={{backgroundColor:this.state.color}}>
+        <QuoteBox color={this.state.color} updateColor = {this.updateColor} />
+      </div>
+    );
+  }
+}
+
+
+class QuoteBox extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      quote: '', 
+      author: '',
+    };
+    this.updateText = this.updateText.bind(this);
+    this.updateContent = this.updateContent.bind(this);
+  }
+  
+  
+  
+  updateContent(){
+    this.updateText().then(()=>{
+      this.props.updateColor();
+    }); 
+  }
+  
+  
+  
+  async updateText(){
+    const apiUrl = 'https://goquotes-api.herokuapp.com/api/v1/random?count=1';
+    await fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        var quote = data['quotes'][0];
+        this.setState((oldState) => ({
+        quote: quote["text"],
+        author: quote["author"],
+      })
+    );
+  });
+ }
+  componentDidMount() {
+    this.updateContent();
+  }
+  
+  render(){
+    return (
+      <div id='quote-box'>
+        
+        <div class="quote-text">
+          <i id='quote-icon' style={{color:this.props.color}} class="fa fa-quote-left fa-fw"></i>
+          <span id='text' style={{color:this.props.color}}>
+           {this.state.quote}
+          </span>
+        </div>
+        <div class='quote-author'>
+          - <span style={{color:this.props.color}} id="author">{this.state.author}</span>
+        </div>
+        <div className='row'>
+          <a href="twitter.com/intent/tweet" title="Tweet this quote" target="_blank" id="tweet-quote" className="btn btn-primary short-col fab fa-twitter" style={{backgroundColor:this.props.color, borderColor:this.props.color}}>
+          </a>
+          <a href="#" target="_blank"  id="tumblr-quote" className="btn btn-primary fab fa-tumblr short-col" style={{backgroundColor:this.props.color, borderColor:this.props.color}}>
+          </a>
+          <div className='spacer'></div>
+          <Button className='large-col' id="new-quote" onClick={this.updateContent} style={{backgroundColor:this.props.color, borderColor:this.props.color}}>
+            New Quote
+          </Button>
+        </div>
+      </div>
+    );
+  }
+}
+ReactDOM.render(<AppWrapper />, document.querySelector('#app'));

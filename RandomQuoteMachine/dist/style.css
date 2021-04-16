@@ -1,0 +1,76 @@
+* {
+  color: white;
+  background-color: white;
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  font-weight: 400;
+  font-family: "Raleway", sans-serif;
+}
+
+#app-wrapper {
+  height: 100vh;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 2s;
+}
+
+#quote-box {
+  width: 550px;
+  height: auto;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 50px;
+  z-index: 2;
+}
+#quote-box #author, #quote-box #text, #quote-box #quote-icon {
+  transition: all 2s ease-out;
+}
+
+.quote-text {
+  height: auto;
+  text-align: center;
+  font-size: 1.75em;
+  font-weight: 500;
+}
+
+.quote-author {
+  height: auto;
+  padding-top: 20px;
+  font-size: 1em;
+  text-align: right;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 12px;
+  justify-content: space-around;
+}
+.row .large-col {
+  flex: 4;
+}
+.row .spacer {
+  flex: 12;
+}
+.row .short-col {
+  margin-right: 5px;
+  width: 40px;
+  align-self: center;
+  padding: 10px 0px;
+}
+.row Button {
+  color: white;
+  transition: all 2s;
+}
+.row a {
+  color: white;
+  transition: all 2s;
+}
