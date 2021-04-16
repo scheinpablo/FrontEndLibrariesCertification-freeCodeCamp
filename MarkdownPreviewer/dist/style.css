@@ -1,0 +1,84 @@
+*{
+  margin: 0;
+  padding: 0;
+  color: black;
+  --background-color: rgb(135,181,181);
+  --header-color: rgb(74,163,163);
+  --hover-color: rgb(130,250,130);
+  --card-background-color: rgb(192,216,216);
+}
+
+.app-wrapper{
+  height: auto;
+  min-height: 100vh;
+  weight: 100%;
+  background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-section{
+  width: 70%;
+  min-width: 200px;
+  border: 1.5px solid black;
+  box-shadow: 1px 1px 10px 2px #3a5f5f;
+  margin: 20px 0;
+}
+
+.card-header{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  
+  padding: 2px 20px;
+  background-color: var(--header-color);
+  border-bottom: 1.5px solid black;
+  font-family: "Russo One"
+}
+
+#expand-icon{
+  background-color: transparent;
+  border-color: transparent; 
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+#expand-icon i:hover{
+  color:var(--hover-color);
+}
+
+.card-body{
+  margin:0;
+  padding:0;
+  background-color: var(--card-background-color);
+}
+
+.card-editor{
+  height: 200px;
+  width: 40%;
+}
+
+
+
+.form-group{
+  height: 100%;
+}
+
+.form, #editor{
+  height: 100%;
+  background-color: transparent;
+}
+
+#preview{
+  height: 100%;
+  padding: 5px 30px;
+}
+
+.full{
+  min-height:90vh;
+  width: 90%;
+}

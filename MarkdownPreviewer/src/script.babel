@@ -1,0 +1,109 @@
+const Button = ReactBootstrap.Button;
+const Card = ReactBootstrap.Card;
+const Form = ReactBootstrap.Form;
+class AppWrapper extends React.Component{
+  
+  constructor(props){
+    super(props);
+    this.state = {
+      text: '',
+      editorFull: false,
+      previewerFull: false
+    };
+
+  marked.setOptions({
+    gfm: true,
+    breaks: true,
+  });
+    this.updateText = this.updateText.bind(this);
+    this.toggleFullScreen = this.toggleFullScreen.bind(this);
+  }
+  
+  updateText (markdown) {
+    console.log('a');
+    this.setState((oldState) => ({
+      ...oldState,
+      text: marked(markdown),
+    }));
+  };
+  
+  toggleFullScreen(type){
+    this.setState((oldState)=>({
+      ...oldState,
+      editorFull: (type == "editor") ? !oldState.editorFull : false,
+      previewerFull: (type == "previewer") ? !oldState.previewerFull : false,
+    }));
+  }
+  
+  render(){
+    return (
+      <div className="app-wrapper">
+        {(!this.state.previewerFull) ? <CardSection full={this.state.editorFull} type="editor" onFull={(type)=>{this.toggleFullScreen(type);}} title="Editor" onChanged={(markdown)=>{this.updateText(markdown);}}/> : <div></div>}
+        {(!this.state.editorFull) ? <CardSection  full={this.state.previewerFull} type="previewer" onFull={(type)=>{this.toggleFullScreen(type);}} title="Previewer" text={this.state.text}/> : <div></div>}
+        
+      </div>
+    );
+  }
+}
+
+class CardSection extends React.Component{
+  render(){
+    let fullS = (this.props.full)? " full" : "";
+    return (
+      <Card className={"card-section card-" + this.props.type + fullS}>
+        <Card.Header className="card-header">
+          <div>
+            <i id='freecodecamp-icon' className="fab fa-free-code-camp"></i>   
+            <b>  {this.props.title}</b>
+          </div>
+          <Button onClick={()=>{this.props.onFull(this.props.type);}} id='expand-icon'>
+            <i className="fas fa-expand-arrows-alt"></i>
+          </Button>
+        </Card.Header>
+        <Card.Body className="card-body">
+          {this.props.type == 'editor' ?  <Editor markdown={this.props.markdown} onChanged={(markdown)=>{this.props.onChanged(markdown);}}/> : <Previewer text={this.props.text}/>}
+        </Card.Body>
+      </Card>
+    );
+  }
+}
+
+class Editor extends React.Component{
+  constructor(props){
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      markdown:"# Welcome to my React Markdown Previewer!\r\n\r\n## This is a sub-heading...\r\n### And here\'s some other cool stuff:\r\n\r\nHeres some code, `<div><\/div>`, between 2 backticks.\r\n\r\n```\r\n\/\/ this is multi-line code:\r\n\r\nfunction anotherExample(firstLine, lastLine) {\r\n  if (firstLine == \'```\' && lastLine == \'```\') {\r\n    return multiLineCode;\r\n  }\r\n}\r\n```\r\n\r\nYou can also make text **bold**... whoa!\r\nOr _italic_.\r\nOr... wait for it... **_both!_**\r\nAnd feel free to go crazy ~~crossing stuff out~~.\r\n\r\nThere\'s also [links](https:\/\/www.freecodecamp.com), and\r\n> Block Quotes!\r\n\r\nAnd if you want to get really crazy, even tables:\r\n\r\nWild Header | Crazy Header | Another Header?\r\n------------ | ------------- | -------------\r\nYour content can | be here, and it | can be here....\r\nAnd here. | Okay. | I think we get it.\r\n\r\n- And of course there are lists.\r\n  - Some are bulleted.\r\n     - With different indentation levels.\r\n        - That look like this.\r\n\r\n\r\n1. And there are numbererd lists too.\r\n1. Use just 1s if you want!\r\n1. And last but not least, let\'s not forget embedded images:\r\n\r\n![React Logo w\/ Text](https:\/\/goo.gl\/Umyytc)\r\n"
+    };
+  }
+  
+  componentDidMount(){
+    this.props.onChanged(this.state.markdown);
+  }
+  
+  handleChange(event) {
+    this.setState({markdown: event.target.value});
+    this.props.onChanged(event.target.value);
+  }
+  
+  render(){
+    return(
+      <Form className='form'>
+        <Form.Group controlId="exampleForm.ControlTextarea1">
+            <Form.Control as="textarea" value={this.state.markdown} onChange={this.handleChange} id="editor" rows={3} />
+          </Form.Group>
+      </Form>
+    );
+  }
+}
+
+class Previewer extends React.Component{
+  render(){
+     return (
+       <div id="preview" dangerouslySetInnerHTML={{__html: this.props.text}} >
+       </div>
+     );
+  }
+}
+
+ReactDOM.render(<AppWrapper />, document.getElementById('app'));
