@@ -11,3 +11,8 @@ Pen Code: https://codepen.io/scheinpablo/pen/vYgrjZb
 
 Full View: https://codepen.io/scheinpablo/full/vYgrjZb 
 
+## Drum Machine
+Pen Code: https://codepen.io/scheinpablo/pen/eYgKqWv
+
+Full View: https://codepen.io/scheinpablo/full/eYgKqWv
+
