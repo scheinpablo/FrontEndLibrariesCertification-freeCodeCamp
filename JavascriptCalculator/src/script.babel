@@ -1,0 +1,118 @@
+const AppWrapper = (props) =>
+{
+  return(
+    <div className='app-wrapper'>
+      <Calculator />
+    </div>
+  );
+}
+
+const Calculator = (props) => {
+  const [calculation, setCalculation] = React.useState('');
+  const [result, setResult] = React.useState('0');
+  const [showingResult, setShowingResult] = React.useState(true);
+  
+  const isAbsolutOperator = (char) => {
+    if(char == '+' || char == '/' || char == '*' ) return true;
+    return false;
+  }
+  
+  const isOperator = (char) => {
+    if(char == '+' || char == '/' || char == '*' || char=='-' ) return true;
+    return false;
+  }
+  
+  const addToCalculation = (newChar) => {
+    
+    if(isOperator(newChar)){
+      setResult(newChar)
+      if (showingResult){
+        setCalculation(result + newChar);
+      }else{
+        
+        if (isAbsolutOperator(newChar)){
+          var count = 0;
+          while(isOperator(calculation.charAt(calculation.length - 1 - count)) && count<=calculation.length)
+            {
+              count+=1; 
+            }
+          newCalc = calculation;
+          if (count!=0) newCalc = calculation.slice(0,-count);
+          
+          setCalculation(newCalc + newChar)
+        } else{
+          setCalculation(calculation + newChar);
+        }
+      }
+    }else if(newChar == '.'){
+      if (!result.includes('.')){
+        if (calculation.slice(-1) == null || isOperator(calculation.slice(-1))){
+          setCalculation(calculation + '0' + newChar)
+          setResult('0' + newChar);
+        }else{
+          setCalculation(calculation + newChar);
+          setResult(result + newChar);
+        }
+      }
+    } else{
+      if(result.charAt(0)!= null && result.charAt(0) == '0' && calculation.slice(-1) != '.'){
+        setResult(newChar);
+        if (newChar != '0'){
+          setCalculation(calculation + newChar);
+        }
+      }else if (isOperator(result.charAt(0))){
+        setResult(newChar);
+        setCalculation(calculation + newChar);
+      }else{
+        setResult(result + newChar);
+        setCalculation(calculation + newChar);
+      }
+    }
+    setShowingResult(false);
+  }
+  
+  const clearCalculation = () => {
+    setCalculation('');
+    setResult('0');
+    setShowingResult(false);
+  }
+  
+  const getResult = () => {
+    setResult(Number(math.evaluate(calculation).toFixed(4)).toString());
+    setShowingResult(true);
+  }
+  
+  return( 
+    <div className='calculator'>
+      <div id='screen'>
+        <div id='partial-calc'>{calculation}</div>
+        <div id='display'>{result.toString()}</div>    
+     </div>
+      
+      <button className='calculator-button' id='clear' onClick={() => {clearCalculation();}}>AC</button>
+      <button className='calculator-button operation-button' id='divide' onClick={() => {addToCalculation('/');}}>/</button>
+      <div className='calculator-button operation-button' id='multiply' onClick={() => {addToCalculation('*');}}>x</div>
+      
+      <button className='calculator-button' id='seven' onClick={() => {addToCalculation('7');}}>7</button>
+      <button className='calculator-button' id='eight' onClick={() => {addToCalculation('8');}}>8</button>
+      <button className='calculator-button' id='nine' onClick={() => {addToCalculation('9');}}>9</button>
+      <button className='calculator-button operation-button' id='subtract' onClick={() => {addToCalculation('-');}}>-</button>
+      
+      <button className='calculator-button' id='four' onClick={() => {addToCalculation('4');}}>4</button>
+      <button className='calculator-button' id='five' onClick={() => {addToCalculation('5');}}>5</button>
+      <button className='calculator-button' id='six' onClick={() => {addToCalculation('6');}}>6</button>
+      <button className='calculator-button operation-button' id='add' onClick={() => {addToCalculation('+');}}>+</button>
+      
+     <button className='calculator-button' id='one' onClick={() => {addToCalculation('1');}}>1</button>
+      <button className='calculator-button' id='two' onClick={() => {addToCalculation('2');}}>2</button>
+      <button className='calculator-button' id='three' onClick={() => {addToCalculation('3');}}>3</button>
+      <button className='calculator-button' id='equals' onClick={() => {getResult();}}>=</button>
+      
+      <button className='calculator-button' id='zero' onClick={() => {addToCalculation('0');}}>0</button>
+      <button className='calculator-button' id='decimal' onClick={() => {addToCalculation('.');}}>.</button>
+    </div>
+  );
+    
+}
+
+ReactDOM.render(<AppWrapper />, document.getElementById('app'));
