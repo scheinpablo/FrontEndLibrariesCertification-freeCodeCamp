@@ -21,5 +21,10 @@ Pen Code: https://codepen.io/scheinpablo/pen/xxgaGXQ
 
 Full View: https://codepen.io/scheinpablo/full/xxgaGXQ  
 
+## 25 + 5 Clock
+Pen Code: https://codepen.io/scheinpablo/pen/abpampJ  
+
+Full View: https://codepen.io/scheinpablo/full/abpampJ  
+
 
 
