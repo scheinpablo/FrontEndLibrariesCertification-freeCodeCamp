@@ -1,9 +1,10 @@
-# front-end-libraries-cert-freecodecamp
-https://www.freecodecamp.org/learn/front-end-libraries/
 
-## Certification
 
+# Front End Development Libraries Certification Link:
 https://freecodecamp.org/certification/sch_pab/front-end-libraries 
+
+### Course Link:
+https://www.freecodecamp.org/learn/front-end-libraries/
 
 ### Random Quote Machine
 Pen Code: https://codepen.io/scheinpablo/pen/BapxrWv  
